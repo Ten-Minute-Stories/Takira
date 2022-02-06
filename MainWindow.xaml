@@ -1,0 +1,25 @@
+﻿<Window x:Class="Takira.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takira"
+        mc:Ignorable="d"
+        Title="Takira" Height="720" Width="1280">
+    <Grid x:Name="MainRoot" Background="White">
+            <Grid.RowDefinitions>
+                    <RowDefinition Height="1.2*"/>
+                    <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Canvas x:Name="Illustration" Grid.Row="0" Grid.Column="0" Background="#dddddd" Margin="10">
+            </Canvas>
+            <TextBlock x:Name="QuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" Text="asdasd"/>
+            <TextBlock x:Name="Status" Grid.Row="1" Grid.Column="0" Background="#eeeeee" Margin="10" />
+            <StackPanel x:Name="Answers" Grid.Row="1" Grid.Column="1" Background="#eeeeee" Margin="10" Orientation="Vertical">
+            </StackPanel>
+    </Grid>
+</Window>
