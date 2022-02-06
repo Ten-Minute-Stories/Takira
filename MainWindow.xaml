@@ -15,9 +15,9 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Canvas x:Name="Illustration" Grid.Row="0" Grid.Column="0" Background="#dddddd" Margin="10">
-            </Canvas>
-            <TextBlock x:Name="QuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" Text="asdasd"/>
+            <!-- Тут бы по-хорошему чё-то типа image, но хуй с ним -->
+            <Canvas x:Name="Illustration" Grid.Row="0" Grid.Column="0" Background="#dddddd" Margin="10"/>
+            <TextBlock x:Name="QuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" TextWrapping="Wrap"/>
             <TextBlock x:Name="Status" Grid.Row="1" Grid.Column="0" Background="#eeeeee" Margin="10" />
             <StackPanel x:Name="Answers" Grid.Row="1" Grid.Column="1" Background="#eeeeee" Margin="10" Orientation="Vertical">
             </StackPanel>
