@@ -59,6 +59,7 @@
             <SubType>Code</SubType>
         </Compile>
         <Compile Include="Handlers\QuestParseHandler.cs" />
+        <Compile Include="Objects\QuestPage.cs" />
         <Compile Include="UIHelper.cs" />
         <Compile Include="MainWindow.xaml.cs">
             <DependentUpon>MainWindow.xaml</DependentUpon>

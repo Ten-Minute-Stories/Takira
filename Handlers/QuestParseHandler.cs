@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using Takira.Objects;
 
 namespace Takira.Handlers
 {
@@ -11,7 +12,8 @@ namespace Takira.Handlers
         // Не особо знаю где эта переменная пригодится и правильно ли она вообще тут стоит, но похер
         // Потом придумаем :D
         public static string StoryTitle;
-        public static List<Page> LoadQuestFromFile(string filename)
+        // Благодаря Dictionary мы можем обращаться к блокам квестов сразу по имени, а не искать среди массива
+        public static Dictionary<string, QuestPage> LoadQuestFromFile(string filename)
         {
             string story = readFile(filename);
             return initPages(story);
@@ -27,9 +29,9 @@ namespace Takira.Handlers
             return text;
         }
 
-        private static List<Page> initPages(string story)
+        private static Dictionary<string, QuestPage> initPages(string story)
         {
-            List<Page> pages = new List<Page>();
+            Dictionary<string, QuestPage> pages = new Dictionary<string, QuestPage>();
             // Это регулярное выражение делит блоки следующим образом:
             // Если в тексте встретилось ::, оно берёт первую строчку в первую группу
             // Всё, что идёт в следующих строчках, ловится во вторую группу
@@ -46,23 +48,22 @@ namespace Takira.Handlers
             for (int i = 3; i < pageMatches.Count; i++)
             {
                 MatchCollection answerMatches = answersRegex.Matches(pageMatches[i].Groups[2].Value);
-                Dictionary<string, string>[] answers = new Dictionary<string, string>[answerMatches.Count];
+                string[][] answers = new string[answerMatches.Count][];
                 int j = 0;
                 string pageText = pageMatches[i].Groups[2].Value;
                 foreach (Match answerMatch in answerMatches)
                 {
-                    Dictionary<string, string> answer = new Dictionary<string, string>();
+                    string[] answer = new string[2];
                     // Если ссылка на другой блок не имеет переименования(т.е. выглядит как [[Осмотреться]]),
                     // Значит regex поймал только группу №1. Группы №2 и №3 остаются пустыми.
                     // В этом случае вариант, который мы показываем пользователю идентичен названию блока.
                     if (answerMatch.Groups[2].Value.Equals(""))
-                    {
-                        answer.Add(answerMatch.Groups[1].Value, answerMatch.Groups[1].Value);
-                    }
+                        answer[0] = answer[1] = answerMatch.Groups[1].Value;
                     // Если переименование есть, то группа №1 пуста, а №2 и №3 содержат переименование и название соответственно.
                     else
                     {
-                        answer.Add(answerMatch.Groups[3].Value, answerMatch.Groups[2].Value);
+                        answer[0] = answerMatch.Groups[3].Value;
+                        answer[1] = answerMatch.Groups[2].Value;
                     }
                     // Добавляем один "ответ" в список всех ответов
                     answers[j] = answer;
@@ -72,30 +73,18 @@ namespace Takira.Handlers
                     // Делается это потому, что этот кастрированный текст уже будет выводиться пользователю
                     pageText = pageText.Replace(answerMatch.Value, "");
                 }
-                pages.Add(new Page()
-                {
-                    header = pageMatches[i].Groups[1].Value.Trim(), 
-                    answers = answers,
-                    text = pageText
-                });
+                // В принципе, остаётся вопрос: "зачем нужен header внутри структуры тоже?"
+                // Вопрос хороший, и потенциально можно его из структуры вырезать, но пока не будем
+                pages.Add(pageMatches[i].Groups[1].Value.Trim(),
+                    new QuestPage()
+                    {
+                        header = pageMatches[i].Groups[1].Value.Trim(), 
+                        answers = answers,
+                        text = pageText
+                    });
             }
 
             return pages;
         }
-    }
-
-    /*
-     * Данный блок описывает одну "страницу" квеста. Каждая переменная отвечает за свою часть.
-     * header - короткое название, имя данного блока.
-     * answers - варианты ответа. Key - имя следующего блока. Value - то, что выводим юзеру.
-     * text - текст. да.
-     * image - ну, блин, картинка, что же ещё.
-     */
-    public struct Page
-    {
-        public string header { get; set; }
-        public Dictionary<string, string>[] answers { get; set; }
-        public string text { get; set; }
-        public Image image { get; set; }
     }
 }

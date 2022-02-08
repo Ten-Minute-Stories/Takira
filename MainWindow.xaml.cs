@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Takira.Handlers;
+using Takira.Objects;
 
 namespace Takira
 {
