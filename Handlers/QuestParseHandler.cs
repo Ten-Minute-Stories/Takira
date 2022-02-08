@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Markup;
 using Takira.Objects;
 
 namespace Takira.Handlers
@@ -13,6 +15,11 @@ namespace Takira.Handlers
         // Потом придумаем :D
         public static string StoryTitle;
         // Благодаря Dictionary мы можем обращаться к блокам квестов сразу по имени, а не искать среди массива
+        /// <summary>
+        /// Загружает файл квеста из папки Quests.
+        /// </summary>
+        /// <param name="filename">название файла квеста</param>
+        /// <returns>Объект Dictionary, в котором ключ - название страницы, а значение - сам объект страницы</returns>
         public static Dictionary<string, QuestPage> LoadQuestFromFile(string filename)
         {
             string story = readFile(filename);
