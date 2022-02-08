@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -92,6 +93,46 @@ namespace Takira.Handlers
             }
 
             return pages;
+        }
+
+        /// <summary>
+        /// Превращает форматирование(жирный, курсив) текста из синтаксиса Twine в синтаксис XAML.
+        /// </summary>
+        /// <param name="text">строка, имеющая форматирование Twine(''жирный'', //курсив//)</param>
+        /// <returns>Inline текстового блока(TextBlock), готовый к отображению</returns>
+        /// <example>Пример применения форматирования. Обратите внимание, что присваивание текста происходит сразу же, поэтому менять Content текст-блока не нужно
+        /// <code lang="C#">
+        /// TextBlock myTextBlock = new TextBlock();
+        /// var inline = QuestParseHandler.ApplyFormatting("//Курсивный текст//");
+        /// myTextBlock.Inlines.AddRange(inline);
+        /// </code></example>
+        public static IEnumerable<Inline> ApplyFormatting(string text)
+        {
+            var textBlock = (TextBlock) XamlReader.Parse(
+                "<TextBlock xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">"
+                + findFormatting(text)
+                + "</TextBlock>");
+            return textBlock.Inlines.ToList();
+        }
+        
+        // С помощью regex просто ищет форматирование Twine.
+        // Два паттерна применяются отдельно для поддержки двойного форматирования(и жирный, и курсив)
+        private static string findFormatting(string text)
+        {
+            Regex regex = new Regex(@"''([\s\S]+?)''");
+            foreach (Match match in regex.Matches(text))
+            {
+                string result = match.Result("<Bold>$1</Bold>");
+                text = text.Replace(match.Value, result);
+            }
+
+            regex = new Regex(@"//([\s\S]+?)//");
+            foreach (Match match in regex.Matches(text))
+            {
+                string result = match.Result("<Italic>$1</Italic>");
+                text = text.Replace(match.Value, result);
+            }
+            return text;
         }
     }
 }
