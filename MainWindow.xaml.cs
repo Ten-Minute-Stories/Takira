@@ -38,7 +38,7 @@ namespace Takira
             button.Content = buttonText;
             // Связываем кнопку со страницей, на которую она ссылается
             button.Tag = new object[] {this, header, rename};
-            button.Click += new RoutedEventHandler(PageSwitchingHandler.SwitchPage);
+            button.Click += new RoutedEventHandler(ButtonClickHandler.SwitchPage);
             this.Answers.Children.Add(button);
         }
 
