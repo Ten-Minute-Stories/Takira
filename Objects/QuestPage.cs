@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 /*
  * Данный блок описывает одну "страницу" квеста. Каждая переменная отвечает за свою часть.
@@ -9,6 +10,7 @@
  */
 namespace Takira.Objects
 {
+    [Serializable]
     public struct QuestPage
     {
         public string header { get; set; }

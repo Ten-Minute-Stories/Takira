@@ -81,12 +81,15 @@ namespace Takira.Handlers
                     // Делается это потому, что этот кастрированный текст уже будет выводиться пользователю
                     pageText = pageText.Replace(answerMatch.Value, "");
                 }
+                // Меняем header только первого блока, чтобы он соответствовал названию квеста
+                // Таким образом, название квеста всегда будет соответствовать точке входа
+                string header = i == 3 ? pageMatches[0].Groups[2].Value.Trim() : pageMatches[i].Groups[1].Value.Trim();
                 // В принципе, остаётся вопрос: "зачем нужен header внутри структуры тоже?"
                 // Вопрос хороший, и потенциально можно его из структуры вырезать, но пока не будем
-                pages.Add(pageMatches[i].Groups[1].Value.Trim(),
+                pages.Add(header,
                     new QuestPage()
                     {
-                        header = pageMatches[i].Groups[1].Value.Trim(), 
+                        header = header, 
                         answers = answers,
                         text = pageText
                     });
