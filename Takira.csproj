@@ -90,6 +90,7 @@
         <Compile Include="Handlers\PageSwitchingHandler.cs" />
         <Compile Include="Handlers\QuestParseHandler.cs" />
         <Compile Include="Handlers\SerializationHandler.cs" />
+        <Compile Include="Helpers\ImageHelper.cs" />
         <Compile Include="Objects\QuestPage.cs" />
         <Compile Include="Objects\Icons.cs" />
         <Compile Include="UIHelper.cs" />

@@ -23,7 +23,11 @@
             <StackPanel x:Name="Answers" Grid.Row="1" Grid.Column="1" Background="#eeeeee" Margin="10" Orientation="Vertical"/>
             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#dddddd"
                     Margin="10, 0, 10, 0" CornerRadius="9, 9, 0, 0">
-                    <StackPanel x:Name="Tools"  Orientation="Horizontal" />
+                    <StackPanel x:Name="Tools"  Orientation="Horizontal">
+                            <!-- Тут костыль, но мне пиздец лень его чинить, я не дезигнер -->
+                            <Button BorderThickness="0" Margin="6, 0, 0, 0" Click="Save_OnClick"><Image x:Name="Save" Height="35" Width="35"/></Button>
+                            <Button BorderThickness="0" Margin="3, 0, 0, 0" Click="Load_OnClick"><Image x:Name="Load" Height="30" Width="35"/></Button>
+                    </StackPanel>
             </Border>
     </Grid>
 </Window>

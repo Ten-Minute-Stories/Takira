@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Controls;
 
 /*
  * Данный блок описывает одну "страницу" квеста. Каждая переменная отвечает за свою часть.
@@ -16,6 +15,6 @@ namespace Takira.Objects
         public string header { get; set; }
             public string[][] answers { get; set; }
             public string text { get; set; }
-            public Image image { get; set; }
+            public string base64image { get; set; }
     }
 }

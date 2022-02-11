@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using Takira.Handlers;
+using Takira.Helpers;
 using Takira.Objects;
 
 namespace Takira
@@ -73,6 +72,21 @@ namespace Takira
             this.ResizeMode = ResizeMode.NoResize;
             Story = QuestParseHandler.LoadQuestFromFile("Realmnauts.Act1.Printer.tw");
             PageSwitchingHandler.SetPage(this, Story.ElementAt(0).Key);
+            Save.Source = ImageHelper.ConvertImage(Icons.Save, 35, 35);
+            Load.Source = ImageHelper.ConvertImage(Icons.Load, 35, 30);
+        }
+
+        private void Save_OnClick(object sender, RoutedEventArgs e)
+        {
+            SerializationHandler.Save(Story);
+        }
+
+
+        private void Load_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Пока хардкод, ибо для теста
+            // TODO: Имплементировать загрузку квеста из файла. Возможно, через "обзор".
+            SerializationHandler.Load("Realmnauts.Act1.Printer.cqt");
         }
     }
 }
