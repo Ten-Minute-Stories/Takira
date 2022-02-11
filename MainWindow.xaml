@@ -27,6 +27,8 @@
                             <!-- Тут костыль, но мне пиздец лень его чинить, я не дезигнер -->
                             <Button BorderThickness="0" Margin="6, 0, 0, 0" Click="Save_OnClick"><Image x:Name="Save" Height="35" Width="35"/></Button>
                             <Button BorderThickness="0" Margin="3, 0, 0, 0" Click="Load_OnClick"><Image x:Name="Load" Height="30" Width="35"/></Button>
+                            <Button BorderThickness="0" Margin="3, 0, 0, 0" Click="Left_OnClick" IsEnabled="False" x:Name="Back"><Image x:Name="ArrowLeft" Height="35" Width="35"/></Button>
+                            <Button BorderThickness="0" Margin="0, 0, 0, 0" Click="Right_OnClick" IsEnabled="False" x:Name="Forward"><Image x:Name="ArrowRight" Height="35" Width="35"/></Button>
                     </StackPanel>
             </Border>
     </Grid>
