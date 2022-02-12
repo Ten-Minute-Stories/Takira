@@ -48,7 +48,7 @@ namespace Takira
             button.HorizontalContentAlignment = HorizontalAlignment.Left;
             button.MinHeight = 30;
             // Устанавливаем текст кнопки и сразу применяем форматирование
-            buttonText.Inlines.AddRange(QuestParseHandler.ApplyFormatting(rename));
+            buttonText.Inlines.AddRange(FormatHelper.ApplyFormatting(rename));
             button.Content = buttonText;
             // Связываем кнопку со страницей, на которую она ссылается
             button.Tag = header;
@@ -62,7 +62,7 @@ namespace Takira
         public void SetText(string text)
         {
             this.QuestText.Text = "";
-            this.QuestText.Inlines.AddRange(QuestParseHandler.ApplyFormatting(text));
+            this.QuestText.Inlines.AddRange(FormatHelper.ApplyFormatting(text));
         }
         
         /// <summary>

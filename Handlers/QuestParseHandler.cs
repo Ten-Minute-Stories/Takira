@@ -1,11 +1,6 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Markup;
 using Takira.Objects;
 
 namespace Takira.Handlers
@@ -98,26 +93,6 @@ namespace Takira.Handlers
             return pages;
         }
 
-        /// <summary>
-        /// Превращает форматирование(жирный, курсив) текста из синтаксиса Twine в синтаксис XAML.
-        /// </summary>
-        /// <param name="text">строка, имеющая форматирование Twine(''жирный'', //курсив//)</param>
-        /// <returns>Inline текстового блока(TextBlock), готовый к отображению</returns>
-        /// <example>Пример применения форматирования. Обратите внимание, что присваивание текста происходит сразу же, поэтому менять Content текст-блока не нужно
-        /// <code lang="C#">
-        /// TextBlock myTextBlock = new TextBlock();
-        /// var inline = QuestParseHandler.ApplyFormatting("//Курсивный текст//");
-        /// myTextBlock.Inlines.AddRange(inline);
-        /// </code></example>
-        public static IEnumerable<Inline> ApplyFormatting(string text)
-        {
-            var textBlock = (TextBlock) XamlReader.Parse(
-                "<TextBlock xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">"
-                + findFormatting(text)
-                + "</TextBlock>");
-            return textBlock.Inlines.ToList();
-        }
-        
         // С помощью regex просто ищет форматирование Twine.
         // Два паттерна применяются отдельно для поддержки двойного форматирования(и жирный, и курсив)
         private static string findFormatting(string text)
