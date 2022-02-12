@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -52,7 +53,7 @@ namespace Takira
             button.Content = buttonText;
             // Связываем кнопку со страницей, на которую она ссылается
             button.Tag = header;
-            button.Click += new RoutedEventHandler(SwitchPage_OnClick);
+            button.Click += SwitchPage_OnClick;
             this.Answers.Children.Add(button);
         }
 
@@ -84,9 +85,7 @@ namespace Takira
         /// <summary>
         /// Меняет страницу квеста на другую по названию страницы.
         /// </summary>
-        /// <param name="window">Объект квестового окна</param>
         /// <param name="header">Название страницы</param>
-        ///
         public void SetPage(string header)
         {
             QuestPage page = Story[header];
