@@ -34,10 +34,10 @@ namespace Takira
             EditImage.Source = ImageHelper.ConvertImage(Icons.Edit, (int)Math.Round(EditImage.Width), (int)Math.Round(EditImage.Height));
         }
         
-        public void SetButtons(QuestPage page)
+        public void SetButtons(string[][] answers)
         {
             this.Answers.Children.Clear();
-            foreach (string[] answer in page.answers)
+            foreach (string[] answer in answers)
                 AddButton(answer[0], answer[1]);
         }
 
@@ -48,6 +48,7 @@ namespace Takira
             // Применяем "стиль"
             buttonText.TextWrapping = TextWrapping.Wrap;
             button.HorizontalContentAlignment = HorizontalAlignment.Left;
+            button.Padding = new Thickness(2, 6, 0, 6);
             button.MinHeight = 30;
             // Устанавливаем текст кнопки и сразу применяем форматирование
             buttonText.Inlines.AddRange(FormatHelper.ApplyFormatting(rename));
@@ -90,7 +91,7 @@ namespace Takira
         public void SetPage(string header)
         {
             QuestPage page = Story[header];
-            SetButtons(page);
+            SetButtons(page.answers);
             RenderText(page.text);
             currentPage = page;
         }
@@ -149,19 +150,42 @@ namespace Takira
 
         private void Edit_OnClick(object sender, RoutedEventArgs e)
         {
+            // Вход в режим редактирования
             if (QuestText.IsVisible)
             {
                 QuestText.Visibility = Visibility.Hidden;
                 EditableQuestText.Visibility = Visibility.Visible;
                 EditableQuestText.Text = currentPage.text;
+                Back.IsEnabled = false;
+                Forward.IsEnabled = false;
+                int counter = Answers.Children.Count;
+                Answers.Children.Clear();
+                for (int i = 0; i < counter; i++)
+                {
+                    TextBox textBox = new TextBox();
+                    textBox.Text = currentPage.answers[i][1];
+                    textBox.Padding = new Thickness(0, 6, 0, 6);
+                    textBox.TextWrapping = TextWrapping.Wrap;
+                    textBox.MinHeight = 30;
+                    Answers.Children.Add(textBox);
+                }
             }
+            // Выход из режима редактирования
             else
             {
                 QuestText.Visibility = Visibility.Visible;
                 EditableQuestText.Visibility = Visibility.Hidden;
                 currentPage.text = EditableQuestText.Text;
+                for (int i = 0; i < Answers.Children.Count; i++)
+                {
+                    TextBox textBox = Answers.Children[i] as TextBox;
+                    if (textBox == null) continue;
+                    currentPage.answers[i][1] = textBox.Text;
+                }
+                Back.IsEnabled = pageHistory.Count == 0 ? false : true;
+                Forward.IsEnabled = inversePageHistory.Count == 0 ? false : true;
                 Story[currentPage.header] = currentPage;
-                RenderText(currentPage.text);
+                SetPage(currentPage.header);
             }
         }
     }

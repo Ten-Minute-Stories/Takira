@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
             <!-- Тут бы по-хорошему чё-то типа image, но хуй с ним -->
             <Canvas x:Name="Illustration" Grid.Row="0" Grid.Column="0" Background="#dddddd" Margin="10"/>
-            <TextBox x:Name="EditableQuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" TextWrapping="Wrap" Visibility="Hidden" AcceptsReturn="True"/>
+            <TextBox x:Name="EditableQuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="7, 9, 9, 9" TextWrapping="Wrap" Visibility="Hidden" AcceptsReturn="True"/>
             <TextBlock x:Name="QuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" TextWrapping="Wrap" Visibility="Visible" />
             <TextBlock x:Name="Status" Grid.Row="1" Grid.Column="0" Background="#eeeeee" Margin="10" />
             <StackPanel x:Name="Answers" Grid.Row="1" Grid.Column="1" Background="#eeeeee" Margin="10" Orientation="Vertical"/>
