@@ -17,17 +17,19 @@
             </Grid.ColumnDefinitions>
             <!-- Тут бы по-хорошему чё-то типа image, но хуй с ним -->
             <Canvas x:Name="Illustration" Grid.Row="0" Grid.Column="0" Background="#dddddd" Margin="10"/>
-            <TextBlock x:Name="QuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" TextWrapping="Wrap"/>
+            <TextBox x:Name="EditableQuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" TextWrapping="Wrap" Visibility="Hidden" AcceptsReturn="True"/>
+            <TextBlock x:Name="QuestText" Grid.Row="0" Grid.Column="1" Background="#dddddd" Margin="10" Padding="10" TextWrapping="Wrap" Visibility="Visible" />
             <TextBlock x:Name="Status" Grid.Row="1" Grid.Column="0" Background="#eeeeee" Margin="10" />
             <StackPanel x:Name="Answers" Grid.Row="1" Grid.Column="1" Background="#eeeeee" Margin="10" Orientation="Vertical"/>
             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#dddddd"
                     Margin="10, 0, 10, 0" CornerRadius="9, 9, 0, 0">
                     <StackPanel x:Name="Tools"  Orientation="Horizontal">
                             <!-- Тут костыль, но мне пиздец лень его чинить, я не дезигнер -->
-                            <Button BorderThickness="0" Margin="6, 0, 0, 0" Click="Save_OnClick"><Image x:Name="Save" Height="35" Width="35"/></Button>
-                            <Button BorderThickness="0" Margin="3, 0, 0, 0" Click="Load_OnClick"><Image x:Name="Load" Height="30" Width="35"/></Button>
-                            <Button BorderThickness="0" Margin="3, 0, 0, 0" Click="Left_OnClick" IsEnabled="False" x:Name="Back"><Image x:Name="ArrowLeft" Height="35" Width="35"/></Button>
-                            <Button BorderThickness="0" Margin="0, 0, 0, 0" Click="Right_OnClick" IsEnabled="False" x:Name="Forward"><Image x:Name="ArrowRight" Height="35" Width="35"/></Button>
+                            <Button BorderThickness="0" Margin="6, 0, 0, 0" Click="Save_OnClick"><Image x:Name="Save" Height="30" Width="30"/></Button>
+                            <Button BorderThickness="0" Margin="0, 0, 0, 0" Click="Load_OnClick"><Image x:Name="Load" Height="40" Width="40"/></Button>
+                            <Button BorderThickness="0" Margin="0, 0, 0, 0" Click="Left_OnClick" IsEnabled="False" x:Name="Back"><Image x:Name="ArrowLeft" Height="40" Width="40"/></Button>
+                            <Button BorderThickness="0" Margin="0, 0, 0, 0" Click="Right_OnClick" IsEnabled="False" x:Name="Forward"><Image x:Name="ArrowRight" Height="40" Width="40"/></Button>
+                            <Button BorderThickness="0" Margin="0, 0, 0, 0" Click="Edit_OnClick" x:Name="Edit" Padding="3, 0, 0, 0"><Image x:Name="EditImage" Height="40" Width="40"/></Button>
                     </StackPanel>
             </Border>
     </Grid>

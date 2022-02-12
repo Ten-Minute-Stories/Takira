@@ -17,7 +17,7 @@ namespace Takira
     public partial class MainWindow
     {
         public Dictionary<string, QuestPage> Story;
-        private string currentPageHeader;
+        private QuestPage currentPage;
         private Stack<string> pageHistory = new Stack<string>();
         private Stack<string> inversePageHistory = new Stack<string>();
         
@@ -27,10 +27,11 @@ namespace Takira
             this.ResizeMode = ResizeMode.NoResize;
             Story = QuestParseHandler.LoadQuestFromFile("Realmnauts.Act1.Printer.tw");
             SetPage(Story.ElementAt(0).Key);
-            Save.Source = ImageHelper.ConvertImage(Icons.Save, 35, 35);
-            Load.Source = ImageHelper.ConvertImage(Icons.Load, 35, 30);
-            ArrowLeft.Source = ImageHelper.ConvertImage(Icons.ArrowLeft, 35, 35);
-            ArrowRight.Source = ImageHelper.ConvertImage(Icons.ArrowRight, 35, 35);
+            Save.Source = ImageHelper.ConvertImage(Icons.Save, (int)Math.Round(Save.Width), (int)Math.Round(Save.Height));
+            Load.Source = ImageHelper.ConvertImage(Icons.Load, (int)Math.Round(Load.Width), (int)Math.Round(Load.Height));
+            ArrowLeft.Source = ImageHelper.ConvertImage(Icons.ArrowLeft, (int)Math.Round(ArrowLeft.Width), (int)Math.Round(ArrowLeft.Height));
+            ArrowRight.Source = ImageHelper.ConvertImage(Icons.ArrowRight, (int)Math.Round(ArrowRight.Width), (int)Math.Round(ArrowRight.Height));
+            EditImage.Source = ImageHelper.ConvertImage(Icons.Edit, (int)Math.Round(EditImage.Width), (int)Math.Round(EditImage.Height));
         }
         
         public void SetButtons(QuestPage page)
@@ -60,7 +61,7 @@ namespace Takira
         /// <summary>
         /// Изменяет текст в блоке повествования независимо от других элементов
         /// </summary>
-        public void SetText(string text)
+        public void RenderText(string text)
         {
             this.QuestText.Text = "";
             this.QuestText.Inlines.AddRange(FormatHelper.ApplyFormatting(text));
@@ -90,14 +91,14 @@ namespace Takira
         {
             QuestPage page = Story[header];
             SetButtons(page);
-            SetText(page.text);
-            currentPageHeader = header;
+            RenderText(page.text);
+            currentPage = page;
         }
 
         private void SwitchPage_OnClick(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            pageHistory.Push(currentPageHeader);
+            pageHistory.Push(currentPage.header);
             Forward.IsEnabled = false;
             Back.IsEnabled = true;
             inversePageHistory.Clear();
@@ -120,7 +121,7 @@ namespace Takira
         {
             if (pageHistory.Count != 0)
             {
-                inversePageHistory.Push(currentPageHeader);
+                inversePageHistory.Push(currentPage.header);
                 Forward.IsEnabled = true;
                 SetPage(pageHistory.Pop());
             }
@@ -135,7 +136,7 @@ namespace Takira
         {
             if (inversePageHistory.Count != 0)
             {
-                pageHistory.Push(currentPageHeader);
+                pageHistory.Push(currentPage.header);
                 Back.IsEnabled = true;
                 SetPage(inversePageHistory.Pop());
             }
@@ -143,6 +144,24 @@ namespace Takira
             {
                 Button button = (Button)sender;
                 button.IsEnabled = false;
+            }
+        }
+
+        private void Edit_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (QuestText.IsVisible)
+            {
+                QuestText.Visibility = Visibility.Hidden;
+                EditableQuestText.Visibility = Visibility.Visible;
+                EditableQuestText.Text = currentPage.text;
+            }
+            else
+            {
+                QuestText.Visibility = Visibility.Visible;
+                EditableQuestText.Visibility = Visibility.Hidden;
+                currentPage.text = EditableQuestText.Text;
+                Story[currentPage.header] = currentPage;
+                RenderText(currentPage.text);
             }
         }
     }
