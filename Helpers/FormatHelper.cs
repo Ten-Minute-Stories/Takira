@@ -32,20 +32,20 @@ namespace Takira.Helpers
         {
             text = text.Replace("\n", "<LineBreak/>");
             
-            Regex regex = new Regex(@"(?<!\*|\\\*)\*{2,2}([^\*\n][\s\S]+?[^\*])\*{2,2}(?!\*|\\)");
-            foreach (Match match in regex.Matches(text))
-            {
-                string result = match.Result("<Bold>$1</Bold>");
-                text = text.Replace(match.Value, result);
-            }
-
-            regex = new Regex(@"(?<!\*|\\)\*([^\*\n][\s\S]+?[^\*|\\])\*(?!\*)");
+            Regex regex = new Regex(@"(?<!\*|\\)\*([^\*\n][\s\S]+?[^\*|\\])\*(?!\*)");
             foreach (Match match in regex.Matches(text))
             {
                 string result = match.Result("<Italic>$1</Italic>");
                 text = text.Replace(match.Value, result);
             }
             
+            regex = new Regex(@"(?<!\*|\\\*)\*{2,2}([^\*\n][\s\S]+?[^\*])\*{2,2}(?!\*|\\)");
+            foreach (Match match in regex.Matches(text))
+            {
+                string result = match.Result("<Bold>$1</Bold>");
+                text = text.Replace(match.Value, result);
+            }
+
             regex = new Regex(@"(?<!\*|\\)\*{3,3}([^\*\n][\s\S]+?[^\*|\\])\*{3,3}(?!\*)");
             foreach (Match match in regex.Matches(text))
             {
