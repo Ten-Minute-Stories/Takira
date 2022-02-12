@@ -53,7 +53,7 @@ namespace Takira.Handlers
                 MatchCollection answerMatches = answersRegex.Matches(pageMatches[i].Groups[2].Value);
                 string[][] answers = new string[answerMatches.Count][];
                 int j = 0;
-                string pageText = pageMatches[i].Groups[2].Value;
+                string pageText = format(pageMatches[i].Groups[2].Value);
                 foreach (Match answerMatch in answerMatches)
                 {
                     string[] answer = new string[2];
@@ -61,12 +61,12 @@ namespace Takira.Handlers
                     // Значит regex поймал только группу №1. Группы №2 и №3 остаются пустыми.
                     // В этом случае вариант, который мы показываем пользователю идентичен названию блока.
                     if (answerMatch.Groups[2].Value.Equals(""))
-                        answer[0] = answer[1] = answerMatch.Groups[1].Value;
+                        answer[0] = answer[1] = format(answerMatch.Groups[1].Value);
                     // Если переименование есть, то группа №1 пуста, а №2 и №3 содержат переименование и название соответственно.
                     else
                     {
-                        answer[0] = answerMatch.Groups[3].Value;
-                        answer[1] = answerMatch.Groups[2].Value;
+                        answer[0] = format(answerMatch.Groups[3].Value);
+                        answer[1] = format(answerMatch.Groups[2].Value);
                     }
                     // Добавляем один "ответ" в список всех ответов
                     answers[j] = answer;
@@ -95,19 +95,19 @@ namespace Takira.Handlers
 
         // С помощью regex просто ищет форматирование Twine.
         // Два паттерна применяются отдельно для поддержки двойного форматирования(и жирный, и курсив)
-        private static string findFormatting(string text)
+        private static string format(string text)
         {
             Regex regex = new Regex(@"''([\s\S]+?)''");
             foreach (Match match in regex.Matches(text))
             {
-                string result = match.Result("<Bold>$1</Bold>");
+                string result = match.Result("**$1**");
                 text = text.Replace(match.Value, result);
             }
 
             regex = new Regex(@"//([\s\S]+?)//");
             foreach (Match match in regex.Matches(text))
             {
-                string result = match.Result("<Italic>$1</Italic>");
+                string result = match.Result("*$1*");
                 text = text.Replace(match.Value, result);
             }
             return text;
