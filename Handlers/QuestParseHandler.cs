@@ -74,7 +74,7 @@ namespace Takira.Handlers
                     
                     // Удаляем из текста ссылки на другие блоки
                     // Делается это потому, что этот кастрированный текст уже будет выводиться пользователю
-                    pageText = pageText.Replace(format(answerMatch.Value), "");
+                    pageText = pageText.Replace(format(answerMatch.Value), "").Trim();
                 }
                 // Меняем header только первого блока, чтобы он соответствовал названию квеста
                 // Таким образом, название квеста всегда будет соответствовать точке входа
